@@ -95,6 +95,60 @@ class Timetable extends CI_Model{
     {
         return $this->dayofweek;
     }
+    
+      function getDayKeys()
+    {
+        return array_keys($this->dayofweek);
+    }
+
+    
+     function getCourseKeys()
+    {
+        return array_keys($this->course);
+    }
+    
+     function getPeriodKeys()
+    {
+        return array_keys($this->timeslot);
+    }
+    
+    function queryDay($day)
+    {
+      return $this->dayofweek[$day];
+    }
+    
+    function queryCourse($course)
+    {
+      return $this->course[$course];
+    }
+    function queryTime($time)
+    {
+      return $this->timeslot[$time];
+    }
+    
+    function query($day, $time, $course)
+    {
+        $result = array();
+        $dayResult = array();
+        $courseResult = array();
+        $periodResult = array();
+        if ($day !== "void")
+        {
+            $dayResult = $this->queryDay($day);
+        }
+        if ($time !== "void")
+        {
+            $periodResult = $this->queryTime($time);
+        }
+        if ($course !== "void")
+        {
+            $courseResult = $this->queryCourse($course);
+        }
+        array_push($result, $dayResult);
+        array_push($result, $periodResult);
+        array_push($result, $courseResult);
+        return $result;
+    }
 }
 
 class Booking
